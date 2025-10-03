@@ -11,7 +11,7 @@ export class MercadosArmazenados {
 
   async nomeJaExiste(nome: string): Promise<boolean> {
     const mercadoEncontrado = this.#mercados.find(
-      mercado => mercado.nome.toLowerCase() === nome.toLowerCase()
+      mercado => mercado.nome.toLowerCase() === nome.toLowerCase(),
     );
     return mercadoEncontrado !== undefined;
   }
@@ -24,13 +24,20 @@ export class MercadosArmazenados {
     return mercado;
   }
 
+  async buscarMercado(id: string): Promise<MercadoEntity> {
+    return this.buscaPorID(id);
+  }
+
   async removeMercado(id: string): Promise<MercadoEntity> {
     const mercado = this.buscaPorID(id);
     this.#mercados = this.#mercados.filter(m => m.id !== id);
     return mercado;
   }
 
-  async atualizaMercado(id: string, dados: Partial<MercadoEntity>): Promise<MercadoEntity> {
+  async atualizaMercado(
+    id: string,
+    dados: Partial<MercadoEntity>,
+  ): Promise<MercadoEntity> {
     const mercado = this.buscaPorID(id);
 
     Object.entries(dados).forEach(([chave, valor]) => {
