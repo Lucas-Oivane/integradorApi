@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Put,
-  Delete,
-  Param,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Delete, Param } from '@nestjs/common';
 import { MercadosArmazenados } from './mercado.dm';
 import { MercadoEntity } from './mercado.entity';
 import { CriarMercadoDto } from './dto/criaMercado.dto';

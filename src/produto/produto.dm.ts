@@ -1,21 +1,22 @@
 import { Injectable } from "@nestjs/common";
 import { ProdutoEntity } from "./produto.entity";
 import { AlterarProdutoDto } from "./dto/alterarProduto.dto";
+import { ProdutosDatabase } from "../database/produtos.database";
 
 @Injectable()
 export class ProdutoArmazenado {
-  private _produtos: ProdutoEntity[] = [];
+  private readonly db = ProdutosDatabase.instance;
 
   get produtos(): ProdutoEntity[] {
-    return this._produtos;
+    return this.db.produtos;
   }
 
   adicionarProduto(produto: ProdutoEntity) {
-    this._produtos.push(produto);
+    this.db.adicionarProduto(produto);
   }
 
   atualizaProduto(id: string, dados: AlterarProdutoDto): ProdutoEntity {
-    const produto = this._produtos.find((p) => p.id === id);
+    const produto = this.db.produtos.find((p) => p.id === id);
     if (!produto) {
       throw new Error("Produto não encontrado");
     }
@@ -29,11 +30,12 @@ export class ProdutoArmazenado {
   }
 
   removeProduto(id: string): ProdutoEntity {
-    const index = this._produtos.findIndex((p) => p.id === id);
-    if (index === -1) {
+    const produto = this.db.produtos.find((p) => p.id === id);
+    if (!produto) {
       throw new Error("Produto não encontrado");
     }
-    const [removido] = this._produtos.splice(index, 1);
-    return removido;
+
+    this.db.removerProduto(id);
+    return produto;
   }
 }
