@@ -13,15 +13,12 @@ export class ComparativoDM {
   gerarComparativo(produtos: string[], mercados: { nome: string; precos: Record<string, string> }[]): ComparativoEntity[] {
     const comparativo: ComparativoEntity[] = [];
 
-    mercados.forEach(mercado => {
-      const registro: ComparativoEntity = {
-        nomeMercado: mercado.nome,
-        precos: {} as Record<string, number>, // conversão para evitar erro
-      };
+    produtos.forEach(produto => {
+      const registro = new ComparativoEntity(produto); // cria registro para o produto
 
-      produtos.forEach(produto => {
+      mercados.forEach(mercado => {
         const precoString = mercado.precos[produto];
-        registro.precos[produto] = precoString ? Number(precoString) : 0;
+        registro.precos[mercado.nome] = precoString || "0"; // mantém preço como string
       });
 
       comparativo.push(registro);

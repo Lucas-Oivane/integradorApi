@@ -11,7 +11,7 @@ export class ProdutosDatabase {
   mercados: MercadoEntity[] = [];
 
   private constructor() {
-    // Dados fixos iniciais para teste — agora com id gerado corretamente
+    // Dados fixos iniciais para teste
     this.produtos = [
       new ProdutoEntity(uuid(), 'Arroz', 'Tio João', '1kg', '5.49'),
       new ProdutoEntity(uuid(), 'Feijão', 'Camil', '1kg', '7.89'),
